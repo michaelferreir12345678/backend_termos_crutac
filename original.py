@@ -9,15 +9,13 @@ from reportlab.lib.enums import TA_JUSTIFY
 
 
 def desenhar_titulo_com_fundo(c, x, y, texto):
-    # Define a largura e altura do contêiner do título
     largura_cont = 510  
     altura_cont = 15
-    # Desenha o retângulo cinza claro
-    c.setFillColorRGB(0.9, 0.9, 0.9)  # Cor cinza claro
+
+    c.setFillColorRGB(0.9, 0.9, 0.9)
     c.rect(x, y - altura_cont + 11, largura_cont, altura_cont, fill=True, stroke=False)
     
-    # Escreve o título sobre o contêiner
-    c.setFillColorRGB(0, 0, 0)  # Cor do texto: preto
+    c.setFillColorRGB(0, 0, 0)
     c.setFont("Helvetica-Bold", 10)
     c.drawString(x + 1, y, texto)
     
@@ -43,32 +41,30 @@ def gerar_pdf_dados_aluno(dados):
     c = canvas.Canvas(nome_arquivo, pagesize=A4)
     largura, altura = A4
 
-    # Título principal do documento
-    c.setFont("Helvetica-Bold", 16)
-    c.drawString(70, altura - 80, "TERMO DE COMPROMISSO DE ESTÁGIO OBRIGATÓRIO")
+    c.setFont("Helvetica-Bold", 14)
+    c.drawString(95, altura - 60, "TERMO DE COMPROMISSO DE ESTÁGIO OBRIGATÓRIO")
 
-    # Seções com contêineres de fundo cinza
-    desenhar_titulo_com_fundo(c, 40, altura - 120, "Dados da Instituição de Ensino")
+    desenhar_titulo_com_fundo(c, 40, altura - 110, "Dados da Instituição de Ensino")
     c.setFont("Helvetica", 8)
-    c.drawString(40, altura - 135, "Nome: Universidade Federal do Ceará – UFC            CNPJ: 07.272.636/0001-31")
-    c.drawString(40, altura - 150, "Endereço: Av. da Universidade, 2853, Benfica, Fortaleza - CE            Fone/Fax: (85) 3366 7413 / 3366 7881")
-    c.drawString(40, altura - 165, "Representante Legal: Reitor Custódio Luís Silva de Almeida   Coordenador Agência de Estágios: Profa. Maria Ozilea Bezerra Menezes")
+    c.drawString(40, altura - 125, "Nome: Universidade Federal do Ceará – UFC            CNPJ: 07.272.636/0001-31")
+    c.drawString(40, altura - 140, "Endereço: Av. da Universidade, 2853, Benfica, Fortaleza - CE            Fone/Fax: (85) 3366 7413 / 3366 7881")
+    c.drawString(40, altura - 155, "Representante Legal: Reitor Custódio Luís Silva de Almeida   Coordenador Agência de Estágios: Profa. Maria Ozilea Bezerra Menezes")
     
-    desenhar_titulo_com_fundo(c, 40, altura - 185, "Dados da Unidade Concedente")
+    desenhar_titulo_com_fundo(c, 40, altura - 175, "Dados da Unidade Concedente")
     c.setFont("Helvetica", 8)
-    c.drawString(40, altura - 200, "Razão Social: Prefeitura Municipal de Beberibe            CNPJ: 07.528.292/0001-89            Fone: (85) 3336-6050")
-    c.drawString(40, altura - 215, "Endereço: Rua Padre Assis Portela – Centro   CEP: 62840-00            Cidade/UF: BEBERIBE-CE            Setor: Secretaria de Saúde")
-    c.drawString(40, altura - 230, "Representante Legal (Prefeito): Michele Cariello de Sá Queiroz Rocha")
+    c.drawString(40, altura - 190, "Razão Social: Prefeitura Municipal de Beberibe            CNPJ: 07.528.292/0001-89            Fone: (85) 3336-6050")
+    c.drawString(40, altura - 205, "Endereço: Rua Padre Assis Portela – Centro   CEP: 62840-00            Cidade/UF: BEBERIBE-CE            Setor: Secretaria de Saúde")
+    c.drawString(40, altura - 220, "Representante Legal (Prefeito): Michele Cariello de Sá Queiroz Rocha")
 
-    desenhar_titulo_com_fundo(c, 40, altura - 250, "Dados do Aluno")
+    desenhar_titulo_com_fundo(c, 40, altura - 240, "Dados do Aluno")
     c.setFont("Helvetica", 8)
-    c.drawString(40, altura - 265, f"Nome: {dados['Nome']}                       Curso: ODONTOLOGIA                       Semestre: ")
-    c.drawString(40, altura - 280, f"CPF: {dados['CPF']}                       Matrícula: {dados['Matricula']}                       Endereço: {dados['Endereco']}")
-    c.drawString(40, altura - 295, f"Telefone: {dados['Telefone']}")
+    c.drawString(40, altura - 255, f"Nome: {dados['Nome']}                       Curso: ODONTOLOGIA                       Semestre: ")
+    c.drawString(40, altura - 270, f"CPF: {dados['CPF']}                       Matrícula: {dados['Matricula']}                       Endereço: {dados['Endereco']}")
+    c.drawString(40, altura - 285, f"Telefone: {dados['Telefone']}")
 
-    desenhar_titulo_com_fundo(c, 40, altura - 330, "Dados do Professor Orientador")
+    desenhar_titulo_com_fundo(c, 40, altura - 310, "Dados do Professor Orientador")
     c.setFont("Helvetica", 8)
-    c.drawString(40, altura - 345, "Nome: Ana Karine Macedo Teixeira                       SIAPE: 3513644                       Telefone: (85) 33668404")
+    c.drawString(40, altura - 325, "Nome: Ana Karine Macedo Teixeira                       SIAPE: 3513644                       Telefone: (85) 33668404")
 
     clausulas = [
         ("", "As partes firmam o presente Termo de Compromisso de Estágio Obrigatório, observando o disposto na Lei nº 11.788 de 25 de setembro de 2008, na Resolução no 23/CEPE de 30 de outubro 2009 e no Termo de Convênio já firmado entre a Unidade Concedente e a UFC em 09/06/2016, além das seguintes cláusulas: "),
@@ -113,29 +109,26 @@ def gerar_pdf_dados_aluno(dados):
         altura_clausulas = adicionar_paragrafo(c, 40, altura_clausulas, 510, f"{titulo} {texto}", altura)
 
     c.drawString(40, altura - 450, f"Fortaleza - CE, _____ de _______________________ de 2024.")
-    c.line(40, altura - 500, 250, altura - 500)  # Linha para assinatura do aluno
+    c.line(40, altura - 500, 250, altura - 500)  
     c.drawString(40, altura - 510, f"{dados['Nome']}")
     c.drawString(40, altura - 520, "Estagiário")
-    c.line(300, altura - 500, 500, altura - 500)  # Linha para assinatura do representante do município
+    c.line(300, altura - 500, 500, altura - 500)  
     c.drawString(300, altura - 510, "Representante do Município")
     
-    c.line(40, altura - 560, 250, altura - 560)  # Linha para assinatura do aluno
+    c.line(40, altura - 560, 250, altura - 560) 
     c.drawString(40, altura - 570, "Professor(a) Orientador(a) - UFC")
-    c.line(300, altura - 560, 500, altura - 560)  # Linha para assinatura do representante do município
+    c.line(300, altura - 560, 500, altura - 560) 
     c.drawString(300, altura - 570, "Coordenador(a) do Curso de Odontologia - UFC")
     
-    c.line(40, altura - 620, 250, altura - 620)  # Linha para assinatura do aluno
+    c.line(40, altura - 620, 250, altura - 620) 
     c.drawString(40, altura - 630, "José Roberto Pereira de Sousa")
     c.drawString(40, altura - 640, "Coordenador do CRUTAC - UFC")
     
-    # Salva o PDF
     c.showPage()
     c.save()
     print(f"PDF gerado: {nome_arquivo}")
 
-# Lê a planilha com os dados dos alunos
 dados_alunos = pd.read_excel("dados_alunos.xlsx")
 
-# Gera um PDF para cada aluno
 for _, dados in dados_alunos.iterrows():
     gerar_pdf_dados_aluno(dados)

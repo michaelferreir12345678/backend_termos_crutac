@@ -42,7 +42,7 @@ def gerar_pdf_dados_aluno(dados):
     largura, altura = A4
 
     c.setFont("Helvetica-Bold", 16)
-    c.drawString(40, altura - 80, "TERMO DE COMPROMISSO DE ESTÁGIO OBRIGATÓRIO")
+    c.drawString(75, altura - 80, "TERMO DE COMPROMISSO DE ESTÁGIO OBRIGATÓRIO")
 
     desenhar_titulo_com_fundo(c, 40, altura - 120, "Dados da Instituição de Ensino")
     c.setFont("Helvetica", 8)

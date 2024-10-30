@@ -1,16 +1,17 @@
 import pandas as pd
-from reportlab.lib.pagesizes import A4
+from reportlab.lib.pagesizes import A4, A3
 from reportlab.lib import colors
 from reportlab.pdfgen import canvas
 from datetime import datetime
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import Paragraph
+from reportlab.lib.enums import TA_JUSTIFY
+
 
 def desenhar_titulo_com_fundo(c, x, y, texto):
     # Define a largura e altura do contêiner do título
-    largura_cont = 470  
+    largura_cont = 510  
     altura_cont = 15
-    
     # Desenha o retângulo cinza claro
     c.setFillColorRGB(0.9, 0.9, 0.9)  # Cor cinza claro
     c.rect(x, y - altura_cont + 11, largura_cont, altura_cont, fill=True, stroke=False)
@@ -25,16 +26,17 @@ def adicionar_paragrafo(c, x, y, largura, texto, altura_pagina):
     estilo_paragrafo = ParagraphStyle(
         'CustomBodyText',
         parent=styles['BodyText'],
-        fontSize=8,  # Define o tamanho da fonte aqui
-        leading=12,  # Define o espaçamento entre linhas
+        fontSize=8,  
+        leading=12, 
+        alignment=TA_JUSTIFY 
     )
     paragrafo = Paragraph(texto, estilo_paragrafo)
-    w, h = paragrafo.wrap(largura, y)  # Define a largura máxima do parágrafo
-    if y - h < 50:  # Verifica se o conteúdo cabe na página atual; caso contrário, inicia nova página
+    w, h = paragrafo.wrap(largura, y)
+    if y - h < 50:
         c.showPage()
-        y = altura_pagina - 50  # Reinicia a altura para o início da nova página
+        y = altura_pagina - 50 
     paragrafo.drawOn(c, x, y - h)
-    return y - h - 1  # Atualiza a posição vertical após o parágrafo
+    return y - h - 1 
 
 def gerar_pdf_dados_aluno(dados):
     nome_arquivo = f"Termo_{dados['Nome'].replace(' ', '_')}.pdf"
@@ -46,32 +48,32 @@ def gerar_pdf_dados_aluno(dados):
     c.drawString(70, altura - 80, "TERMO DE COMPROMISSO DE ESTÁGIO OBRIGATÓRIO")
 
     # Seções com contêineres de fundo cinza
-    desenhar_titulo_com_fundo(c, 70, altura - 120, "Dados da Instituição de Ensino")
+    desenhar_titulo_com_fundo(c, 40, altura - 120, "Dados da Instituição de Ensino")
     c.setFont("Helvetica", 8)
-    c.drawString(70, altura - 135, "Nome: Universidade Federal do Ceará – UFC   CNPJ: 07.272.636/0001-31")
-    c.drawString(70, altura - 150, "Endereço: Av. da Universidade, 2853, Benfica, Fortaleza - CE  Fone/Fax: (85) 3366 7413 / 3366 7881")
-    c.drawString(70, altura - 165, "Representante Legal: Reitor Custódio Luís Silva de Almeida   Coordenador Agência de Estágios: Profa. Maria Ozilea Bezerra Menezes")
+    c.drawString(40, altura - 135, "Nome: Universidade Federal do Ceará – UFC            CNPJ: 07.272.636/0001-31")
+    c.drawString(40, altura - 150, "Endereço: Av. da Universidade, 2853, Benfica, Fortaleza - CE            Fone/Fax: (85) 3366 7413 / 3366 7881")
+    c.drawString(40, altura - 165, "Representante Legal: Reitor Custódio Luís Silva de Almeida   Coordenador Agência de Estágios: Profa. Maria Ozilea Bezerra Menezes")
     
-    desenhar_titulo_com_fundo(c, 70, altura - 185, "Dados da Unidade Concedente")
+    desenhar_titulo_com_fundo(c, 40, altura - 185, "Dados da Unidade Concedente")
     c.setFont("Helvetica", 8)
-    c.drawString(70, altura - 200, "Razão Social: Prefeitura Municipal de Beberibe   CNPJ: 07.528.292/0001-89   Fone: (85) 3336-6050")
-    c.drawString(70, altura - 215, "Endereço: Rua Padre Assis Portela – Centro   CEP: 62840-00   Cidade/UF: BEBERIBE-CE   Setor: Secretaria de Saúde")
-    c.drawString(70, altura - 230, "Representante Legal (Prefeito): Michele Cariello de Sá Queiroz Rocha")
+    c.drawString(40, altura - 200, "Razão Social: Prefeitura Municipal de Beberibe            CNPJ: 07.528.292/0001-89            Fone: (85) 3336-6050")
+    c.drawString(40, altura - 215, "Endereço: Rua Padre Assis Portela – Centro   CEP: 62840-00            Cidade/UF: BEBERIBE-CE            Setor: Secretaria de Saúde")
+    c.drawString(40, altura - 230, "Representante Legal (Prefeito): Michele Cariello de Sá Queiroz Rocha")
 
-    desenhar_titulo_com_fundo(c, 70, altura - 250, "Dados do Aluno")
+    desenhar_titulo_com_fundo(c, 40, altura - 250, "Dados do Aluno")
     c.setFont("Helvetica", 8)
-    c.drawString(70, altura - 265, f"Nome: {dados['Nome']}                       Curso: ODONTOLOGIA                       Semestre: ")
-    c.drawString(70, altura - 280, f"CPF: {dados['CPF']}                       Matrícula: {dados['Matricula']}                       Endereço: {dados['Endereco']}")
-    c.drawString(70, altura - 295, f"Telefone: {dados['Telefone']}")
+    c.drawString(40, altura - 265, f"Nome: {dados['Nome']}                       Curso: ODONTOLOGIA                       Semestre: ")
+    c.drawString(40, altura - 280, f"CPF: {dados['CPF']}                       Matrícula: {dados['Matricula']}                       Endereço: {dados['Endereco']}")
+    c.drawString(40, altura - 295, f"Telefone: {dados['Telefone']}")
 
-    desenhar_titulo_com_fundo(c, 70, altura - 330, "Dados do Professor Orientador")
+    desenhar_titulo_com_fundo(c, 40, altura - 330, "Dados do Professor Orientador")
     c.setFont("Helvetica", 8)
-    c.drawString(70, altura - 345, "Nome: Ana Karine Macedo Teixeira   SIAPE: 3513644   Telefone: (85) 33668404")
+    c.drawString(40, altura - 345, "Nome: Ana Karine Macedo Teixeira                       SIAPE: 3513644                       Telefone: (85) 33668404")
 
-    # Cláusulas e outras informações com quebra de linha automática
     clausulas = [
+        ("", "As partes firmam o presente Termo de Compromisso de Estágio Obrigatório, observando o disposto na Lei nº 11.788 de 25 de setembro de 2008, na Resolução no 23/CEPE de 30 de outubro 2009 e no Termo de Convênio já firmado entre a Unidade Concedente e a UFC em 09/06/2016, além das seguintes cláusulas: "),
         ("CLÁUSULA PRIMEIRA: ", "Através deste Termo, a UNIDADE CONCEDENTE se compromete a conceder experiência prática profissional, não remunerada, ao ESTAGIÁRIO previamente selecionado, e com frequência regular no curso de graduação em que está matriculado na UFC, em conformidade com o Art. 3º, I, da Lei nº 11.788 de 25/09/2008."),
-        ("", "As partes firmam o presente Termo de Compromisso de Estágio Obrigatório, observando o disposto na Lei nº 11.788 de 25 de setembro de 2008, na Resolução no 23/CEPE de 30 de outubro 2009 e no Termo de Convênio já firmado entre a Unidade Concedente e a UFC em 09/06/2016, além das seguintes cláusulas:"),
+        ("", "As partes firmam o presente Termo de Compromisso de Estágio Obrigatório, observando o disposto na Lei nº 11.788 de 25 de setembro de 2008, na Resolução no 23/CEPE de 40 de outubro 2009 e no Termo de Convênio já firmado entre a Unidade Concedente e a UFC em 09/06/2016, além das seguintes cláusulas:"),
         ("CLÁUSULA SEGUNDA: ", "O estágio tem como objetivo proporcionar ao estudante integração entre teoria e prática, a partir de situações reais e adequadas de trabalho, visando ao seu aprimoramento profissional e pessoal, e obedecerá ao seguinte Plano de Atividades, devendo tais atividades ser compatíveis com o currículo e com os horários escolares do ESTAGIÁRIO, conforme estabelecem o art. 7o, parágrafo único, o art. 3o, III, e o art. 10 da Lei nº 11.788 de 25/09/2008:\nPlano de Atividades:\n- Acompanhar atividades assistenciais, seja em atividades preventivas e curativas compatíveis com a realidade das demandas e recursos dos serviços de saúde do município, prioritariamente na Atenção Primária à Saúde;\n- Acompanhar atividades de saúde coletiva, seja em atividades de gestão, gerenciamento, epidemiologia e educação em saúde."),
         ("Plano de Atividades", ""),
         ("-", "Acompanhar atividades assistenciais, seja em atividades preventivas e curativas compatíveis com a realidade das demandas e recursos dos serviços de saúde do município, prioritariamente na Atenção Primária à Saúde;"),
@@ -108,23 +110,23 @@ def gerar_pdf_dados_aluno(dados):
     altura_clausulas = altura - 355
     for titulo, texto in clausulas:
         c.setFont("Helvetica", 8)
-        altura_clausulas = adicionar_paragrafo(c, 70, altura_clausulas, 470, f"{titulo} {texto}", altura)
+        altura_clausulas = adicionar_paragrafo(c, 40, altura_clausulas, 510, f"{titulo} {texto}", altura)
 
-    data_atual = datetime.now().strftime("%d de %B de %Y")
-    c.drawString(70, altura - 550, f"Fortaleza - CE, {data_atual}")
-    c.line(70, altura - 600, 250, altura - 600)  # Linha para assinatura do aluno
-    c.drawString(70, altura - 610, "Estagiário")
-    c.line(300, altura - 600, 500, altura - 600)  # Linha para assinatura do representante do município
-    c.drawString(300, altura - 610, "Representante do Município")
+    c.drawString(40, altura - 450, f"Fortaleza - CE, _____ de _______________________ de 2024.")
+    c.line(40, altura - 500, 250, altura - 500)  # Linha para assinatura do aluno
+    c.drawString(40, altura - 510, f"{dados['Nome']}")
+    c.drawString(40, altura - 520, "Estagiário")
+    c.line(300, altura - 500, 500, altura - 500)  # Linha para assinatura do representante do município
+    c.drawString(300, altura - 510, "Representante do Município")
     
-    c.line(70, altura - 660, 250, altura - 660)  # Linha para assinatura do aluno
-    c.drawString(70, altura - 670, "Professor(a) Orientador(a) - UFC")
-    c.line(300, altura - 660, 500, altura - 660)  # Linha para assinatura do representante do município
-    c.drawString(300, altura - 670, "Coordenador(a) do Curso de Odontologia - UFC")
+    c.line(40, altura - 560, 250, altura - 560)  # Linha para assinatura do aluno
+    c.drawString(40, altura - 570, "Professor(a) Orientador(a) - UFC")
+    c.line(300, altura - 560, 500, altura - 560)  # Linha para assinatura do representante do município
+    c.drawString(300, altura - 570, "Coordenador(a) do Curso de Odontologia - UFC")
     
-    c.line(70, altura - 720, 250, altura - 720)  # Linha para assinatura do aluno
-    c.drawString(70, altura - 730, "José Roberto Pereira de Sousa")
-    c.drawString(70, altura - 740, "Coordenador do CRUTAC - UFC")
+    c.line(40, altura - 620, 250, altura - 620)  # Linha para assinatura do aluno
+    c.drawString(40, altura - 630, "José Roberto Pereira de Sousa")
+    c.drawString(40, altura - 640, "Coordenador do CRUTAC - UFC")
     
     # Salva o PDF
     c.showPage()

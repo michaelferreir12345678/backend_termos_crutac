@@ -8,7 +8,7 @@ from flask_cors import CORS
 
 
 app = Flask(__name__)
-CORS(app)  # Isso permite todas as origens
+CORS(app) 
 
 
 # Endpoint para upload da planilha e geração do ZIP com PDFs
@@ -31,5 +31,5 @@ def upload_planilha():
     zip_buffer.seek(0)
     return send_file(zip_buffer, as_attachment=True, download_name="termos_estagio.zip", mimetype="application/zip")
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# if __name__ == '__main__':
+#     app.run(debug=True)

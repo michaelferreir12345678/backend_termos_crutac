@@ -81,8 +81,14 @@ def adicionar_paragrafo(c, x, y, largura, texto, altura_pagina):
     return y - h - 1 
 
 def formatar_data_brasileira(data_iso):
-    data_obj = datetime.strptime(data_iso, "%Y-%m-%d")
-    return data_obj.strftime("%d/%m/%Y")
+    try:
+        # Converter a string para um objeto datetime
+        dt = datetime.strptime(data_iso, "%Y-%m-%dT%H:%M:%S.%fZ")
+        # Formatar para o formato brasileiro
+        brazilian_date = dt.strftime("%d/%m/%Y")
+        return brazilian_date
+    except ValueError as e:
+        return f"Erro ao converter a data: {e}"
 
 def gerar_pdf_dados_aluno(nome,
                     cpf,

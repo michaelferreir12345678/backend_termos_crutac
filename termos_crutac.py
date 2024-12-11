@@ -99,7 +99,9 @@ def gerar_pdf_dados_aluno(nome,
                     numero_apolice,
                     vigencia_inicio,
                     vigencia_fim,
-                    unidade_concedente):
+                    unidade_concedente,
+                    inicio_estagio,
+                    fim_estagio):
     pdf_buffer = io.BytesIO()
     c = canvas.Canvas(pdf_buffer, pagesize=A4) 
     largura, altura = A4
@@ -140,7 +142,7 @@ def gerar_pdf_dados_aluno(nome,
         
         ]), 
         ("CLÁUSULA TERCEIRA: ", "Além das atividades previstas no plano, ficam definidas as seguintes características do estágio: "),
-        ("a)", "O estágio terá início em 04/11/2024 e término em 29/11/2024;"),
+        ("a)", f"O estágio terá início em {formatar_data_brasileira(inicio_estagio)} e término em {formatar_data_brasileira(fim_estagio)};"),
         ("b)", "O estudante terá jornada diária de 8 horas, sendo de segunda a sexta-feira, perfazendo no máximo quarenta (40) horas semanais, respeitando o art. 10 da Lei nº 11.788 de 25/09/2008."),
         ("c)", "A carga horária do estágio será reduzida pelo menos à metade nos períodos de avaliação do ESTAGIÁRIO, para garantir o bom desempenho do estudante, nos termos do Art. 10, §2o, da Lei n° 11.788 de 25/09/2008;"),
         ("d)", "A UFC oferece seguro contra acidentes pessoais a todos os seus estudantes devidamente matriculados, também contemplando o ESTAGIÁRIO, parte deste Termo, durante a vigência do presente. Seguem as informações do seguro: "),

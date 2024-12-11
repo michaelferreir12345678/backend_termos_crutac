@@ -69,6 +69,8 @@ def generate_terms():
         vigencia_inicio = data.get("startDate")
         vigencia_fim = data.get("endDate")
         students = data.get("students")
+        inicio_estagio = data.get("startDateEstagio")
+        fim_estagio = data.get("endDateEstagio")
 
         # Verificando se todos os dados necessários foram fornecidos
         if not all([numero_apolice, vigencia_inicio, vigencia_fim, students]):
@@ -106,7 +108,9 @@ def generate_terms():
                 "endereco": endereco,
                 "cidade": cidade,
                 "telefone": telefone,
-                "unidade_concedente": unidade_concedente
+                "unidade_concedente": unidade_concedente,
+                "inicio_estagio": inicio_estagio,
+                "fim_estagio": fim_estagio
             })
 
         # Gerando o arquivo ZIP com os termos
@@ -124,7 +128,9 @@ def generate_terms():
                     numero_apolice,
                     vigencia_inicio,
                     vigencia_fim,
-                    aluno["unidade_concedente"]
+                    aluno["unidade_concedente"],
+                    inicio_estagio,
+                    fim_estagio
                 )
 
                 # Nome do arquivo PDF com o nome do aluno

@@ -4,8 +4,42 @@ from reportlab.lib import colors
 from reportlab.pdfgen import canvas
 from datetime import datetime
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.platypus import Paragraph
+from reportlab.platypus import Paragraph, TableStyle, Table
+import io
 from reportlab.lib.enums import TA_JUSTIFY
+
+
+def adicionar_tabela(c, dados, x, y, largura, altura):
+    tabela = Table(dados)
+    
+    estilo = TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),  
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),  # Texto do cabeçalho em branco
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),  # Alinhamento central
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),  # Fonte do cabeçalho
+        ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),  # Fonte das células
+        ('FONTSIZE', (0, 0), (-1, -1), 8),  # Tamanho da fonte
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),  # Espaçamento na linha do cabeçalho
+        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),  # Fundo das células
+        ('GRID', (0, 0), (-1, -1), 0.5, colors.black),  # Linhas da grade da tabela
+    ])
+    
+    tabela.setStyle(estilo)
+    
+    # Calcula largura das colunas e altura das linhas com base no tamanho total desejado
+    num_colunas = len(dados[0])
+    largura_coluna = largura / num_colunas
+    
+    num_linhas = len(dados)
+    altura_linha = altura / num_linhas
+    
+    # Configura tamanho das colunas e linhas
+    tabela._argW = [largura_coluna] * num_colunas
+    tabela._argH = [altura_linha] * num_linhas
+    
+    # Desenha a tabela na posição especificada
+    tabela.wrapOn(c, x, y)
+    tabela.drawOn(c, x, y - altura)
 
 
 def desenhar_titulo_com_fundo(c, x, y, texto):
@@ -37,8 +71,8 @@ def adicionar_paragrafo(c, x, y, largura, texto, altura_pagina):
     return y - h - 1 
 
 def gerar_pdf_dados_aluno(dados):
-    nome_arquivo = f"Termo_{dados['Nome'].replace(' ', '_')}.pdf"
-    c = canvas.Canvas(nome_arquivo, pagesize=A4)
+    pdf_buffer = io.BytesIO()
+    c = canvas.Canvas(pdf_buffer, pagesize=A4) 
     largura, altura = A4
 
     c.setFont("Helvetica-Bold", 14)
@@ -69,9 +103,8 @@ def gerar_pdf_dados_aluno(dados):
     clausulas = [
         ("", "As partes firmam o presente Termo de Compromisso de Estágio Obrigatório, observando o disposto na Lei nº 11.788 de 25 de setembro de 2008, na Resolução no 23/CEPE de 30 de outubro 2009 e no Termo de Convênio já firmado entre a Unidade Concedente e a UFC em 09/06/2016, além das seguintes cláusulas: "),
         ("CLÁUSULA PRIMEIRA: ", "Através deste Termo, a UNIDADE CONCEDENTE se compromete a conceder experiência prática profissional, não remunerada, ao ESTAGIÁRIO previamente selecionado, e com frequência regular no curso de graduação em que está matriculado na UFC, em conformidade com o Art. 3º, I, da Lei nº 11.788 de 25/09/2008."),
-        ("", "As partes firmam o presente Termo de Compromisso de Estágio Obrigatório, observando o disposto na Lei nº 11.788 de 25 de setembro de 2008, na Resolução no 23/CEPE de 40 de outubro 2009 e no Termo de Convênio já firmado entre a Unidade Concedente e a UFC em 09/06/2016, além das seguintes cláusulas:"),
         ("CLÁUSULA SEGUNDA: ", "O estágio tem como objetivo proporcionar ao estudante integração entre teoria e prática, a partir de situações reais e adequadas de trabalho, visando ao seu aprimoramento profissional e pessoal, e obedecerá ao seguinte Plano de Atividades, devendo tais atividades ser compatíveis com o currículo e com os horários escolares do ESTAGIÁRIO, conforme estabelecem o art. 7o, parágrafo único, o art. 3o, III, e o art. 10 da Lei nº 11.788 de 25/09/2008:\nPlano de Atividades:\n- Acompanhar atividades assistenciais, seja em atividades preventivas e curativas compatíveis com a realidade das demandas e recursos dos serviços de saúde do município, prioritariamente na Atenção Primária à Saúde;\n- Acompanhar atividades de saúde coletiva, seja em atividades de gestão, gerenciamento, epidemiologia e educação em saúde."),
-        ("Plano de Atividades", ""),
+        ("Plano de Atividades: ", ""),
         ("-", "Acompanhar atividades assistenciais, seja em atividades preventivas e curativas compatíveis com a realidade das demandas e recursos dos serviços de saúde do município, prioritariamente na Atenção Primária à Saúde;"),
         ("-", "Acompanhar atividades de saúde coletiva, seja em atividades de gestão, gerenciamento, epidemiologia e educação em saúde."),
         ("CLÁUSULA TERCEIRA: ", "Além das atividades previstas no plano, ficam definidas as seguintes características do estágio: "),
@@ -107,6 +140,15 @@ def gerar_pdf_dados_aluno(dados):
     for titulo, texto in clausulas:
         c.setFont("Helvetica", 8)
         altura_clausulas = adicionar_paragrafo(c, 40, altura_clausulas, 510, f"{titulo} {texto}", altura)
+    
+    dados_test = [
+        ["Nome", "CPF", "Matrícula", "Curso"],
+        ["João da Silva", "123.456.789-00", "2021001", "Direito"],
+        ["Maria Oliveira", "987.654.321-00", "2021002", "Medicina"],
+        ["Carlos Souza", "654.321.987-00", "2021003", "Engenharia"]
+    ]
+    
+    adicionar_tabela(c, dados_test, x=40, y=altura - 200, largura=500, altura=80)
 
     c.drawString(40, altura - 450, f"Fortaleza - CE, _____ de _______________________ de 2024.")
     c.line(40, altura - 500, 250, altura - 500)  

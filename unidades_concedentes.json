@@ -1,0 +1,52 @@
+[
+    {
+        "identificacao": "Beberibe",
+        "razao": "Prefeitura Municipal de Beberibe",
+        "cnpj": "07.528.292/0001-89",
+        "telefone": "(85) 3336-6050",
+        "endereco": "Rua Padre Assis Portela – Centro CEP: 62840-00",
+        "cidade/uf": "BEBERIBE-CE",
+        "setor": "Secretaria de Saúde",
+        "prefeito": "Michele Cariello de Sá Queiroz Rocha"
+    },
+    {
+        "identificacao": "Itaitinga",
+        "razao": "Prefeitura Municipal de Itaitinga",
+        "cnpj": "41.563.628/0001-82",
+        "telefone": "(85)33772617",
+        "endereco": "Rua Coronel Virgílio Tavora, s/n, Centro CEP: 61880-000",
+        "cidade/uf": "Itaitinga-CE",
+        "setor": "Secretaria de Saúde",
+        "prefeito": "Antônio Marcos Tavares"
+    },
+    {
+        "identificacao": "Aquiraz",
+        "razao": "Prefeitura Municipal de Aquiraz",
+        "cnpj": "07.911.696/0001-57",
+        "telefone": "(85): 4062-8090",
+        "endereco": "Rua Francisco Câmara, Nº 332 Centro, CEP: 61700-000",
+        "cidade/uf": "Aquiraz-CE",
+        "setor": "Secretaria de Saúde",
+        "prefeito": "Bruno Barros Gonçalves"
+    },
+    {
+        "identificacao": "Horizonte",
+        "razao": "Prefeitura Municipal de Horizonte",
+        "cnpj": "23.555.196/0001-86",
+        "telefone": "(85)3336-6050",
+        "endereco": "Av. Presidente Castelo Branco, 5100 – Centro CEP: 62880-060",
+        "cidade/uf": "HORIZONTE-CE",
+        "setor": "Secretaria de Saúde",
+        "prefeito": "Manoel Gomes de Farias Neto"
+    },
+    {
+        "identificacao": "Aracati",
+        "razao": "Prefeitura Municipal de Aracati",
+        "cnpj": "07.684.756/0001-46",
+        "telefone": "(88)34212789",
+        "endereco": "Rua Santos Dumont, 1146, Farias Brito, Aracati-CE",
+        "cidade/uf": "ARACATI-CE",
+        "setor": "Secretaria Municipal de Saúde",
+        "prefeito": "Roberta de Bismark"
+    }
+]
